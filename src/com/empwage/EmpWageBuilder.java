@@ -1,19 +1,37 @@
 package com.empwage;
 
+/*@description- below class compute the employee total salary according to 
+ * different companies parameters   
+ *@Parameters- employee's total working hours and total number of days employee worked
+ * are used to calculate employee's salary   */
 public class EmpWageBuilder {
 	// constants
 	final static int IS_FULL_TIME = 1;
-	final static int EMP_RATE_PER_HR = 20;
 	final static int IS_PART_TIME = 2;
-	final static int TOTAL_WORKING_DAYS = 20;
-	final static int TOTAL_WORKING_HR = 100;
-
 	// instance variables
-	private int totalEmpWage = 0;
-	private int totalWorkingHrs = 0;
-	private int days = 0;
+	private int numberOfCompanies = 0;
+	private Company[] company;
 
-	// class method to get working hour of a employee for a day
+	public EmpWageBuilder() {
+		this.company = new Company[5];
+	}
+
+	// To add multiple companies with their parameters to calculate employee wage
+	public void addCompanyDetailsForEmpWage(String companyName, int empRatePerHr, int numnberOfWorkingDays,
+			int maxWorkingHrsPerMonth) {
+		company[numberOfCompanies] = new Company(companyName, empRatePerHr, numnberOfWorkingDays,
+				maxWorkingHrsPerMonth);
+		numberOfCompanies++;
+	}
+
+	// compute employee wages for particular companies
+	public void companyEmpWage() {
+		for (int i = 0; i < numberOfCompanies; i++) {
+			this.empWgaeComputation(company[i]);
+		}
+	}
+
+	// method to get working hour of a employee for a day
 	public int getEmpHrs() {
 		int empHrs;
 		double empCheck = Math.floor(Math.random() * 10) % 3;
@@ -31,32 +49,31 @@ public class EmpWageBuilder {
 		return empHrs;
 	}
 
-	// class method to calculate total salary till the maximum days or maximum hrs
-	// is reached
-	public void empWgaeComputation() {
-		while (days < TOTAL_WORKING_DAYS && totalWorkingHrs <= TOTAL_WORKING_HR) {
+	/*
+	 * method to calculate total salary till the maximum days or maximum hrs is
+	 * reached
+	 */
+	public void empWgaeComputation(Company company) {
+		int days = 0;
+		int totalWorkingHrs = 0;
+		int totalEmpWage = 0;
+		while (days < company.numberOfWorkingDays && totalWorkingHrs <= company.maxWorkingHrsPerMonth) {
 			days++;
 			int empHrs = this.getEmpHrs();
-			// adding daily empHrs to get total Working hour he has worked
 			totalWorkingHrs += empHrs;
 			System.out.println("emp hrs : " + empHrs);
 		}
-		// total salary of employee
-		totalEmpWage = totalWorkingHrs * EMP_RATE_PER_HR;
+		totalEmpWage = totalWorkingHrs * company.empRatePerHr;
+		System.out.println("Total employee wage for company " + company.companyName + " is " + totalEmpWage);
 	}
 
 	public static void main(String args[]) {
 		// welcome message
 		System.out.println("Welcome to employee wage computation problem");
-		System.out.println("Calculating wages for employee1");
-		EmpWageBuilder emp1 = new EmpWageBuilder();
-		emp1.empWgaeComputation();
-		System.out.println(
-				"Total employee1 salary " + emp1.totalEmpWage + " and total working hrs " + emp1.totalWorkingHrs);
-		System.out.println("Calculating wages for employee2");
-		EmpWageBuilder emp2 = new EmpWageBuilder();
-		emp2.empWgaeComputation();
-		System.out.println(
-				"Total employee2 salary " + emp2.totalEmpWage + " and total working hrs " + emp2.totalWorkingHrs);
+		System.out.println("Calculating wages for employees");
+		EmpWageBuilder empWageBuilder = new EmpWageBuilder();
+		empWageBuilder.addCompanyDetailsForEmpWage("Dmart", 20, 20, 100);
+		empWageBuilder.addCompanyDetailsForEmpWage("BigBasket", 25, 20, 80);
+		empWageBuilder.companyEmpWage();
 	}
 }
