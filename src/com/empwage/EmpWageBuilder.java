@@ -24,8 +24,14 @@ public class EmpWageBuilder {
 	public void companyEmpWage() {
 		for (int i = 0; i < companyList.size(); i++) {
 			empWgaeComputation(this.companyList.get(i));
-			System.out.println(this.companyList.get(i).toString());
 		}
+	}
+
+	// print the employee total and daily wage for each company by overriding
+	// toString method
+	public void printEmpWageForCompany() {
+		for (int i = 0; i < companyList.size(); i++)
+			System.out.println(this.companyList.get(i).toString());
 	}
 
 	// method to get working hour of a employee for a day
@@ -71,5 +77,6 @@ public class EmpWageBuilder {
 		empWageBuilder.addCompanyDetailsForEmpWage("BigBasket", 20, 20, 20);
 		empWageBuilder.addCompanyDetailsForEmpWage("Reliance", 10, 20, 10);
 		empWageBuilder.companyEmpWage();
+		empWageBuilder.printEmpWageForCompany();
 	}
 }

@@ -20,7 +20,8 @@ public class Company {
 
 	@Override
 	public String toString() {
-		return "Company [totalEmpWage=" + totalEmpWage + "]\n" + "dailyWage=" + Arrays.toString(dailyWage);
+		return "Company:" + companyName + " [totalEmpWage=" + totalEmpWage + "]\n" + "dailyWage="
+				+ Arrays.toString(dailyWage);
 	}
 
 }
